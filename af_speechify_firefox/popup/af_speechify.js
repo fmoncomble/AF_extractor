@@ -30,9 +30,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-async function performExtractAndSave(url) {
+async function performExtractAndSave(proxyUrl) {
   const parser = new DOMParser();
-  const response = await fetch(url);
+  const response = await fetch(proxyUrl);
   const html = await response.text();
 
   const doc = parser.parseFromString(html, 'text/html');
@@ -51,9 +51,9 @@ async function performExtractAndSave(url) {
 
   const addedFileNames = new Set(); // To track added file names
 
-  await Promise.all(urls.map(async url => {
+  await Promise.all(urls.map(async proxyUrl => {
     try {
-      const contentResponse = await fetch(url);
+      const contentResponse = await fetch(proxyUrl);
       const content = await contentResponse.text();
       const contentDoc = parser.parseFromString(content, 'text/html');
 
