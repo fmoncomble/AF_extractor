@@ -51,7 +51,7 @@ async function performExtractAndSave(url) {
 
   await Promise.all(urls.map(async url => {
     try {
-      const contentResponse = await fetch(url);
+      const contentResponse = await fetch('https://corsproxy.io/?' + url);
       const content = await contentResponse.text();
       const contentDoc = parser.parseFromString(content, 'text/html');
 
