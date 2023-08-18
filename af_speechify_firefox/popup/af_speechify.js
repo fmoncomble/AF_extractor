@@ -42,7 +42,7 @@ async function performExtractAndSave(url) {
 
   const paragraphs = speechesDiv.querySelectorAll('p');
   const urls = Array.from(paragraphs).map(p =>
-    new URL(p.querySelector('a').getAttribute('href'), 'https://corsproxy.io/?https://www.academie-francaise.fr/').href
+    new URL(p.querySelector('a').getAttribute('href'), 'https://www.academie-francaise.fr/').href
   );
 
   const zip = new JSZip();
