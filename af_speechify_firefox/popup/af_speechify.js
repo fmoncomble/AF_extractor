@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
   extractButton.addEventListener('click', async function () {
     try {
       const response = await new Promise((resolve, reject) => {
-        chrome.runtime.sendMessage({ action: 'getTabUrl' }, resolve);
+        browser.runtime.sendMessage({ action: 'getTabUrl' }, resolve);
       });
 
       const url = response.url;
@@ -97,7 +97,7 @@ async function performExtractAndSave(url) {
 
   const zipFileName = 'xml_archive.zip';
   const downloadPromise = new Promise((resolve, reject) => {
-    chrome.downloads.download({
+    browser.downloads.download({
       url: URL.createObjectURL(zipBlob),
       filename: zipFileName,
       saveAs: true,
