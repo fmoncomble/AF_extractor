@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
         urlDisplay.textContent = `Fetched URL: ${url}`;
         statusDiv.textContent = 'Extracting and saving...';
 
-        const fetchedUrls = await performExtractAndSave(url);
+        const proxyUrl = `'https://corsproxy.io/?' + encodeURIComponent(${url})`;
+        const fetchedUrls = await performExtractAndSave(proxyUrl);
 
         const downloadedFilesContainer = document.getElementById('downloadedFiles');
         downloadedFilesContainer.textContent = `Downloaded files: ${fetchedUrls.join(', ')}`;
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-async function performExtractAndSave(url) {
+async function performExtractAndSave(proxyUrl) {
   const parser = new DOMParser();
   const response = await fetch(url);
   const html = await response.text();
