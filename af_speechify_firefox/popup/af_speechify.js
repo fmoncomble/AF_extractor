@@ -6,13 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
   extractButton.addEventListener('click', async function () {
     try {
       let response;
-      
+
       if (typeof browser !== 'undefined' && browser.runtime) {
         response = await browser.runtime.sendMessage({ action: 'getTabUrl' });
       } else if (typeof chrome !== 'undefined' && chrome.runtime) {
-        response = await new Promise((resolve, reject) => {
-          chrome.runtime.sendMessage({ action: 'getTabUrl' }, resolve);
-        });
+        response = await promisifyChromeMessage({ action: 'getTabUrl' });
       } else {
         throw new Error('Unsupported browser');
       }
@@ -35,6 +33,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+function promisifyChromeMessage(message) {
+  return new Promise((resolve, reject) => {
+    chrome.runtime.sendMessage(message, response => {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError);
+      } else {
+        resolve(response);
+      }
+    });
+  });
+}
 
 async function performExtractAndSave(url) {
   const parser = new DOMParser();
@@ -104,37 +114,43 @@ async function performExtractAndSave(url) {
   const zipBlob = await zip.generateAsync({ type: 'blob' });
 
   const zipFileName = 'xml_archive.zip';
-  const downloadPromise = new Promise((resolve, reject) => {
+
+  try {
+    await promisifyBrowserDownload(zipBlob, zipFileName);
+    return Array.from(addedFileNames);
+  } catch (error) {
+    throw new Error(`Failed to initiate download for ${zipFileName}`);
+  }
+}
+
+function promisifyBrowserDownload(blob, fileName) {
+  return new Promise((resolve, reject) => {
     if (typeof browser !== 'undefined' && browser.downloads) {
       browser.downloads.download({
-        url: URL.createObjectURL(zipBlob),
-        filename: zipFileName,
+        url: URL.createObjectURL(blob),
+        filename: fileName,
         saveAs: true,
       }).then(downloadItem => {
         if (downloadItem) {
-          resolve(zipFileName);
+          resolve();
         } else {
-          reject(new Error(`Failed to initiate download for ${zipFileName}`));
+          reject(new Error(`Failed to initiate download for ${fileName}`));
         }
       }).catch(reject);
     } else if (typeof chrome !== 'undefined' && chrome.downloads) {
       chrome.downloads.download({
-        url: URL.createObjectURL(zipBlob),
-        filename: zipFileName,
+        url: URL.createObjectURL(blob),
+        filename: fileName,
         saveAs: true,
       }, downloadId => {
         if (downloadId) {
-          resolve(zipFileName);
+          resolve();
         } else {
-          reject(new Error(`Failed to initiate download for ${zipFileName}`));
+          reject(new Error(`Failed to initiate download for ${fileName}`));
         }
       });
     } else {
       reject(new Error('Download API not available'));
     }
   });
-
-  await downloadPromise;
-
-  return Array.from(addedFileNames);
 }
