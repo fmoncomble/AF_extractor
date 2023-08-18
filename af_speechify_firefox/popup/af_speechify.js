@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+const proxyUrl = 'https://corsproxy.io/?';
 
 async function performExtractAndSave(url) {
   const parser = new DOMParser();
