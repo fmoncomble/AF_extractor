@@ -1,6 +1,6 @@
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   if (message.action === 'getTabUrl') {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       const tab = tabs[0];
       sendResponse({ url: tab.url });
     });
