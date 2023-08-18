@@ -5,17 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   extractButton.addEventListener('click', async function () {
     try {
-      let response;
-      
-      if (typeof browser !== 'undefined' && browser.runtime) {
-        response = await browser.runtime.sendMessage({ action: 'getTabUrl' });
-      } else if (typeof chrome !== 'undefined' && chrome.runtime) {
-        response = await new Promise((resolve, reject) => {
-          chrome.runtime.sendMessage({ action: 'getTabUrl' }, resolve);
-        });
-      } else {
-        throw new Error('Unsupported browser');
-      }
+      const response = await browser.runtime.sendMessage({ action: 'getTabUrl' });
 
       const url = response.url;
       if (url) {
@@ -104,37 +94,18 @@ async function performExtractAndSave(url) {
   const zipBlob = await zip.generateAsync({ type: 'blob' });
 
   const zipFileName = 'xml_archive.zip';
-  const downloadPromise = new Promise((resolve, reject) => {
-    if (typeof browser !== 'undefined' && browser.downloads) {
-      browser.downloads.download({
-        url: URL.createObjectURL(zipBlob),
-        filename: zipFileName,
-        saveAs: true,
-      }).then(downloadItem => {
-        if (downloadItem) {
-          resolve(zipFileName);
-        } else {
-          reject(new Error(`Failed to initiate download for ${zipFileName}`));
-        }
-      }).catch(reject);
-    } else if (typeof chrome !== 'undefined' && chrome.downloads) {
-      chrome.downloads.download({
-        url: URL.createObjectURL(zipBlob),
-        filename: zipFileName,
-        saveAs: true,
-      }, downloadId => {
-        if (downloadId) {
-          resolve(zipFileName);
-        } else {
-          reject(new Error(`Failed to initiate download for ${zipFileName}`));
-        }
-      });
-    } else {
-      reject(new Error('Download API not available'));
-    }
+  const downloadUrl = URL.createObjectURL(zipBlob);
+
+  // Using the Downloads API in Firefox
+  const downloadId = await browser.downloads.download({
+    url: downloadUrl,
+    filename: zipFileName,
+    saveAs: true,
   });
 
-  await downloadPromise;
-
-  return Array.from(addedFileNames);
+  if (downloadId) {
+    return Array.from(addedFileNames);
+  } else {
+    throw new Error(`Failed to initiate download for ${zipFileName}`);
+  }
 }
