@@ -16,7 +16,7 @@
 		"default_icon": "icons/af-32.png",
 		"default_title": "AF Speechify",
 		"default_popup": "popup/af_speechify.html",
-		"show_matches": ["https://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques/*"]
+		"show_matches": ["https://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques*"]
 	},
 
 	"background": {
