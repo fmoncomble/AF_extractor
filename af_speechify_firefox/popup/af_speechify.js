@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+
 async function performExtractAndSave(url) {
   const parser = new DOMParser();
   const response = await fetch(url);
@@ -51,7 +53,7 @@ async function performExtractAndSave(url) {
 
   await Promise.all(urls.map(async url => {
     try {
-      const contentResponse = await fetch(url);
+      const contentResponse = await fetch(proxyUrl + url);
       const content = await contentResponse.text();
       const contentDoc = parser.parseFromString(content, 'text/html');
 
