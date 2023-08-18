@@ -10,7 +10,7 @@
 		"96": "icons/af-96.png"
 	},
 
-	"permissions": ["activeTab", "downloads", "storage"],
+	"permissions": ["activeTab", "downloads", "storage", "*://www.academie-francaise.fr/*"],
 
 	"page_action": {
 		"default_icon": "icons/af-32.png",
