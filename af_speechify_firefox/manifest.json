@@ -12,7 +12,7 @@
 
 	"permissions": ["activeTab", "downloads", "storage"],
 
-	"browser_action": {
+	"page_action": {
 		"default_icon": "icons/af-32.png",
 		"default_title": "AF Speechify",
 		"default_popup": "popup/af_speechify.html",
