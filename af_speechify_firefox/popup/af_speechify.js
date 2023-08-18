@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function performExtractAndSave(proxyUrl) {
   const parser = new DOMParser();
-  const response = await fetch(url);
+  const response = await fetch(proxyUrl);
   const html = await response.text();
 
   const doc = parser.parseFromString(html, 'text/html');
