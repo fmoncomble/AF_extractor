@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   extractButton.addEventListener('click', async function () {
     try {
-      const response = await browser.runtime.sendMessage({ action: 'getTabUrl' });
+      const response = await chrome.runtime.sendMessage({ action: 'getTabUrl' });
 
       const url = response.url;
       if (url) {
@@ -97,7 +97,7 @@ async function performExtractAndSave(url) {
   const downloadUrl = URL.createObjectURL(zipBlob);
 
   // Using the Downloads API in Firefox
-  const downloadId = await browser.downloads.download({
+  const downloadId = await chrome.downloads.download({
     url: downloadUrl,
     filename: zipFileName,
     saveAs: true,
