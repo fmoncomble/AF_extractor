@@ -50,9 +50,9 @@ async function performExtractAndSave(proxyUrl) {
 
   const addedFileNames = new Set(); // To track added file names
 
-  await Promise.all(urls.map(async url => {
+  await Promise.all(urls.map(async proxyUrl => {
     try {
-      const contentResponse = await fetch(url);
+      const contentResponse = await fetch(proxyUrl);
       const content = await contentResponse.text();
       const contentDoc = parser.parseFromString(content, 'text/html');
 
