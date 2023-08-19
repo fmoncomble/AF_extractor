@@ -28,6 +28,18 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+async function generateUniqueZipFileName(baseName, existingFileNames) {
+  let fileName = baseName + '.zip';
+  let index = 1;
+
+  while (existingFileNames.has(fileName)) {
+    fileName = `${baseName}_${index}.zip`;
+    index++;
+  }
+
+  return fileName;
+}
+
 async function performExtractAndSave(url) {
   const parser = new DOMParser();
   const response = await fetch(url);
@@ -95,7 +107,19 @@ async function performExtractAndSave(url) {
 
   const zipBlob = await zip.generateAsync({ type: 'blob' });
 
-  const zipFileName = 'xml_archive.zip';
+  // Generate a unique zip file name
+  const zipBaseFileName = 'xml_archive';
+  const zipFileName = await generateUniqueZipFileName(zipBaseFileName, addedFileNames);
+
+  // Check if the generated zip file name already exists in the download folder
+  const existingDownloads = await browser.downloads.search({ filename: zipFileName });
+  if (existingDownloads.length > 0) {
+    // Generate a unique name if the file already exists
+    const uniqueZipFileName = await generateUniqueZipFileName(zipBaseFileName, addedFileNames);
+    // Update the zip file name to the unique name
+    zipFileName = uniqueZipFileName;
+  }
+
   const downloadPromise = new Promise((resolve, reject) => {
     browser.downloads.download({
       url: URL.createObjectURL(zipBlob),
