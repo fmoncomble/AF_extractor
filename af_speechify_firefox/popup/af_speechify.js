@@ -28,6 +28,18 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+async function generateUniqueZipFileName(baseName, existingFileNames) {
+  let fileName = baseName + '.zip';
+  let index = 1;
+
+  while (existingFileNames.has(fileName)) {
+    fileName = `${baseName}_${index}.zip`;
+    index++;
+  }
+
+  return fileName;
+}
+
 async function performExtractAndSave(url) {
   const parser = new DOMParser();
   const response = await fetch(url);
@@ -96,6 +108,7 @@ async function performExtractAndSave(url) {
   const zipBlob = await zip.generateAsync({ type: 'blob' });
 
   const zipFileName = 'xml_archive.zip';
+  const zipFileName = await generateUniqueZipFileName(zipBaseFileName, addedFileNames);
   const downloadPromise = new Promise((resolve, reject) => {
     browser.downloads.download({
       url: URL.createObjectURL(zipBlob),
