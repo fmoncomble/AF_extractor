@@ -1,4 +1,5 @@
-# af_speechify
+# af_speechify ![af-48](https://github.com/fmoncomble/af_speechify/assets/59739627/930d0182-40b7-4f9b-a33a-69eae5b49a8d)
+
 Une extension pour extraire le texte des discours de l'Académie française sous forme de fichiers .xml prêts à importer dans [TXM](https://txm.gitpages.huma-num.fr/textometrie/).
 
 ## Firefox
