@@ -107,7 +107,7 @@ async function performExtractAndSave(url) {
 
   const zipBlob = await zip.generateAsync({ type: 'blob' });
 
-  const zipBaseFileName = 'xml_archive';
+  const zipBaseFileName = 'xml_archive.zip';
   const zipFileName = await generateUniqueZipFileName(zipBaseFileName, addedFileNames);
   const downloadPromise = new Promise((resolve, reject) => {
     browser.downloads.download({
