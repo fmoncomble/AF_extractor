@@ -11,13 +11,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const url = response.url;
       if (url) {
-        urlDisplay.textContent = `Fetched URL: ${url}`;
+        urlDisplay.textContent = `Base URL: ${url}`;
         statusDiv.textContent = 'Extracting and saving...';
 
         const fetchedUrls = await performExtractAndSave(url);
 
         const downloadedFilesContainer = document.getElementById('downloadedFiles');
-        downloadedFilesContainer.textContent = `Downloaded files: ${fetchedUrls.join(', ')}`;
+        downloadedFilesContainer.innerHTML = `Downloaded files:<br>${fetchedUrls.join('<br>')}`;
 
         statusDiv.textContent = 'Done!';
       }
