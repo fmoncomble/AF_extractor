@@ -10,17 +10,36 @@ body {
 
 button {
   border-radius: 4px;
-  width: 90%;
-  margin: 3% auto;
-  padding: 4px;
+  padding: 4px, 16px;
   text-align: center;
-  font-size: small;
-  color: white;
+  font: "SF Pro Text", sans-serif;
+  font-size: 13px;
+  line-height: 18.2px;
+  color: #FBFBFE;
   cursor: pointer;
-  background-color: gray;
+  background-color: #0060DF;
 }
 
 button:hover {
-  background-color: lightgray;
-  color: black
+  border-radius: 4px;
+  padding: 4px, 16px;
+  text-align: center;
+  font: "SF Pro Text", sans-serif;
+  font-size: 13px;
+  line-height: 18.2px;
+  color: #FBFBFE;
+  cursor: pointer;
+  background-color: #0058cc;
+}
+
+button:active {
+  border-radius: 4px;
+  padding: 4px, 16px;
+  text-align: center;
+  font: "SF Pro Text", sans-serif;
+  font-size: 13px;
+  line-height: 18.2px;
+  color: #FBFBFE;
+  cursor: pointer;
+  background-color: #004db3;
 }
