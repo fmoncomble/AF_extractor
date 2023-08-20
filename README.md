@@ -14,7 +14,7 @@ Une extension pour extraire le texte des discours de l'Académie française sous
 ## Chrome
 - [Télécharger l'extension](https://github.com/fmoncomble/af_speechify/releases/download/v0.1/af_speechify_chrome.zip)
 - Décompresser l'archive .zip
-- Dans le [gestionnaire d'extensions](chrome://extensions/),
+- Dans le gestionnaire d'extensions (`chrome://extensions/`),
   - activer le mode développeur
   - cliquer sur "Chargez l'extension non empaquetée"
   - sélectionner le dossier décompressé
