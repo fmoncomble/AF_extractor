@@ -1,10 +1,10 @@
 {
 	"manifest_version": 2,
 	"name": "af_speechify",
-	"version": "0.1",
+	"version": "0.2",
 
 	"description": "Extrait le texte des discours de l'Académie française à partir d'une page de recherche et les enregistre au format XML pour import dans TXM",
-	"homepage_url": "https://github.com/fmoncomble/af-speech-scraper",
+	"homepage_url": "https://github.com/fmoncomble/af_speechify",
 	"icons": {
 		"48": "icons/af-48.png",
 		"96": "icons/af-96.png"
@@ -22,5 +22,10 @@
 	"background": {
     "scripts": ["background.js"],
     "persistent": false
+  }
+ "browser_specific_settings": {
+    "gecko": {
+      "id": "{a80222a0-a678-4960-a7a6-4f7d01d1255d}"
+    }
   }
 }

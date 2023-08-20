@@ -11,19 +11,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const url = response.url;
       if (url) {
-        urlDisplay.textContent = `Base URL: ${url}`;
-        statusDiv.textContent = 'Extracting and saving...';
+        urlDisplay.textContent = `URL: ${url}`;
+        statusDiv.textContent = 'Extraction en cours...';
 
         const fetchedUrls = await performExtractAndSave(url);
 
         const downloadedFilesContainer = document.getElementById('downloadedFiles');
-        downloadedFilesContainer.innerHTML = `Downloaded files:<br>${fetchedUrls.join('<br>')}`;
+        downloadedFilesContainer.innerHTML = `Fichiers téléchargés:<br>${fetchedUrls.join('<br>')}`;
 
-        statusDiv.textContent = 'Done!';
+        statusDiv.textContent = 'Fini !';
       }
     } catch (error) {
       console.error('Error:', error);
-      statusDiv.textContent = 'An error occurred';
+      statusDiv.textContent = `Une erreur s'est produite`;
     }
   });
 });
@@ -49,7 +49,7 @@ async function performExtractAndSave(url) {
 
   const speechesDiv = doc.querySelector('.speeches');
   if (!speechesDiv) {
-    throw new Error('Speeches div not found');
+    throw new Error('Speeches div non trouvée');
   }
 
   const paragraphs = speechesDiv.querySelectorAll('p');
@@ -72,7 +72,7 @@ async function performExtractAndSave(url) {
       const dateElement = contentDoc.querySelector('[property="dc:date dc:created"]');
 
       if (!bodyDiv || !authorElement) {
-        console.error('Error: Required elements not found');
+        console.error('Erreur : éléments requis non trouvés');
         return;
       }
 
@@ -101,7 +101,7 @@ async function performExtractAndSave(url) {
       zip.file(baseFileName, xmlContent);
 
     } catch (error) {
-      console.error('Error fetching content:', error);
+      console.error('Erreur en récupérant le contenu :', error);
     }
   }));
 
@@ -129,7 +129,7 @@ async function performExtractAndSave(url) {
       if (downloadId) {
         resolve(zipFileName);
       } else {
-        reject(new Error(`Failed to initiate download for ${zipFileName}`));
+        reject(new Error(`Echec au téléchargement de ${zipFileName}`));
       }
     });
   });
