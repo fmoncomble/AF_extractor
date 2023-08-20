@@ -2,6 +2,9 @@ html,
 body {
   width: 500px;
   height: 500px;
+  div {
+  	font: "SF Pro Text", sans-serif;
+  }
 }
 
 .hidden {
@@ -43,3 +46,5 @@ button:active {
   cursor: pointer;
   background-color: #004db3;
 }
+
+
