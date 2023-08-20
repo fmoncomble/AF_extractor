@@ -14,20 +14,20 @@ document.addEventListener('DOMContentLoaded', function () {
           chrome.runtime.sendMessage({ action: 'getTabUrl' }, resolve);
         });
       } else {
-        throw new Error('Unsupported browser');
+        throw new Error('Navigateur non pris en charge');
       }
 
       const url = response.url;
       if (url) {
-        urlDisplay.textContent = `Fetched URL: ${url}`;
-        statusDiv.textContent = 'Extracting and saving...';
+        urlDisplay.textContent = `URL: ${url}`;
+        statusDiv.textContent = 'Extraction en cours...';
 
         const fetchedUrls = await performExtractAndSave(url);
 
         const downloadedFilesContainer = document.getElementById('downloadedFiles');
-        downloadedFilesContainer.textContent = `Downloaded files: ${fetchedUrls.join(', ')}`;
+        downloadedFilesContainer.innerHTML = `Fichiers téléchargés :<br>${fetchedUrls.join('<br>')}`;
 
-        statusDiv.textContent = 'Done!';
+        statusDiv.textContent = 'Fini !';
       }
     } catch (error) {
       console.error('Error:', error);
