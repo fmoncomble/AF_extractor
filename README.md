@@ -8,7 +8,7 @@ Une extension pour extraire le texte des discours de l'Académie française sous
 - Ouvrir une page listant des discours de l'AF ([exemple](https://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques))
 - Cliquer sur l'icône dans la barre d'URL : ![af-32](https://github.com/fmoncomble/af_speechify/assets/59739627/19350e34-71a3-403a-94c3-bfb57138803e)
 
-- Cliquer sur "Extract and Save"
+- Cliquer sur "Extraire"
 - L'archive .zip contenant les fichiers .xml est téléchargée dans le dossier par défaut.
 
 ## Chrome
@@ -20,6 +20,6 @@ Une extension pour extraire le texte des discours de l'Académie française sous
   - sélectionner le dossier décompressé
 - Ouvrir une page listant des discours de l'AF ([exemple](https://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques))
 - Cliquer sur l'icône dans la barre d'outils : ![af-32](https://github.com/fmoncomble/af_speechify/assets/59739627/19350e34-71a3-403a-94c3-bfb57138803e)
-- Cliquer sur "Extract and Save"
+- Cliquer sur "Extraire"
 - Choisir le dossier de destination pour l'archive .zip contenant les fichiers .xml
 
