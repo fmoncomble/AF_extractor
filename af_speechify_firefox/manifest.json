@@ -14,14 +14,14 @@
 
 
 	"background": {
-    "scripts": ["background.js", "jszip.min.js"],
+    "scripts": ["background.js"],
     "persistent": false
 	},
 	
 	"content_scripts": [
 		{
 			"matches": ["*://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques/*"],
-			"js": ["content_script.js"],
+			"js": ["content_script.js", "jszip.min.js"],
 			"css": ["content_script.css"]
 		}
 	]
