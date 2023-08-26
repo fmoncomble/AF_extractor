@@ -1,5 +1,5 @@
 // contentScript.js
-
+document.addEventListener('DOMContentLoaded', () => {
 // Inject the button into the page
 const anchor = document.querySelector('h1');
 const extractButton = document.createElement('button');
@@ -25,5 +25,6 @@ extractButton.addEventListener('click', async () => {
       // Handle error
     }
   });
+});
 });
 
