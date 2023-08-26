@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "af_speechify",
-	"version": "0.3",
+	"version": "0.4",
 
 	"description": "Extrait le texte des discours de l'Académie française à partir d'une page de recherche et les enregistre au format XML pour import dans TXM",
 	"homepage_url": "https://github.com/fmoncomble/af_speechify",
