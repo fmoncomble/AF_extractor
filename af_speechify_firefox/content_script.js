@@ -2,12 +2,17 @@
 document.addEventListener('DOMContentLoaded', () => {
 // Inject the button into the page
 const anchor = document.querySelector('h1');
+if (!anchor) {
+	console.error('Error: anchor not found');
+	return;
+};
 const extractButton = document.createElement('button');
 extractButton.id = 'extractButton';
 extractButton.textContent = 'Extraire';
 anchor.appendChild(extractButton);
 if (!extractButton) {
-	console.error('Error: unable to inject button')
+	console.error('Could not inject button');
+	return;
 };
 
 
