@@ -8,7 +8,6 @@ extractButton.textContent = 'Extraire';
 anchor.appendChild(extractButton);
 
 
-
 // Message passing to notify the background script when the button is clicked
 extractButton.addEventListener('click', async () => {
   chrome.runtime.sendMessage({ action: 'performExtraction', url: window.location.href }, response => {
