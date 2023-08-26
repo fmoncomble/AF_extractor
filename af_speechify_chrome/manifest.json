@@ -20,7 +20,7 @@
 	
 	"content_scripts": [
 		{
-			"matches": ["*://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques/*"],
+			"matches": ["*://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques*"],
 			"js": ["content_script.js"],
 			"css": ["content_script.css"]
 		}
