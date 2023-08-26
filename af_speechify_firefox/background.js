@@ -1,4 +1,4 @@
-chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.action === 'performExtraction') {
     try {
       const url = message.url;
