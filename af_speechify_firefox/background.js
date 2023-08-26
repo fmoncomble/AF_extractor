@@ -1,15 +1,20 @@
-browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'performExtraction') {
     try {
       const url = message.url;
 
-      const fetchedUrls = await performExtractAndSave(url);
+      performExtractAndSave(url)
+        .then(fetchedUrls => {
+          sendResponse({ success: true, fetchedUrls });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          sendResponse({ success: false, error: 'An error occurred' });
+        });
 
-      // Send the result back to the content script
-      sendResponse({ success: true, fetchedUrls });
+      return true; // Indicate that sendResponse will be called asynchronously
     } catch (error) {
       console.error('Error:', error);
-      // Send an error response back to the content script
       sendResponse({ success: false, error: 'An error occurred' });
     }
   }

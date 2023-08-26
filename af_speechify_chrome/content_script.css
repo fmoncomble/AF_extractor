@@ -9,3 +9,8 @@ button:hover {
 	color: white;
 	border-radius: 4px
 }
+
+.fileList {
+	font-family: sans-serif;
+	font-size: small
+}
