@@ -6,39 +6,27 @@ document.addEventListener('DOMContentLoaded', function () {
   extractButton.addEventListener('click', async function () {
     try {
       const response = await new Promise((resolve, reject) => {
-        browser.runtime.sendMessage({ action: 'getTabUrl' }, resolve);
+        chrome.runtime.sendMessage({ action: 'getTabUrl' }, resolve);
       });
 
       const url = response.url;
       if (url) {
-        urlDisplay.textContent = `URL: ${url}`;
-        statusDiv.textContent = 'Extraction en cours...';
+        urlDisplay.textContent = `Fetched URL: ${url}`;
+        statusDiv.textContent = 'Extracting and saving...';
 
         const fetchedUrls = await performExtractAndSave(url);
 
         const downloadedFilesContainer = document.getElementById('downloadedFiles');
-        downloadedFilesContainer.innerHTML = `Fichiers téléchargés:<br>${fetchedUrls.join('<br>')}`;
+        downloadedFilesContainer.textContent = `Downloaded files: ${fetchedUrls.join(', ')}`;
 
-        statusDiv.textContent = 'Fini !';
+        statusDiv.textContent = 'Done!';
       }
     } catch (error) {
       console.error('Error:', error);
-      statusDiv.textContent = `Une erreur s'est produite`;
+      statusDiv.textContent = 'An error occurred';
     }
   });
 });
-
-async function generateUniqueZipFileName(baseName, existingFileNames) {
-  let fileName = baseName + '.zip';
-  let index = 1;
-
-  while (existingFileNames.has(fileName)) {
-    fileName = `${baseName}_${index}.zip`;
-    index++;
-  }
-
-  return fileName;
-}
 
 async function performExtractAndSave(url) {
   const parser = new DOMParser();
@@ -49,7 +37,7 @@ async function performExtractAndSave(url) {
 
   const speechesDiv = doc.querySelector('.speeches');
   if (!speechesDiv) {
-    throw new Error('Speeches div non trouvée');
+    throw new Error('Speeches div not found');
   }
 
   const paragraphs = speechesDiv.querySelectorAll('p');
@@ -72,7 +60,7 @@ async function performExtractAndSave(url) {
       const dateElement = contentDoc.querySelector('[property="dc:date dc:created"]');
 
       if (!bodyDiv || !authorElement) {
-        console.error('Erreur : éléments requis non trouvés');
+        console.error('Error: Required elements not found');
         return;
       }
 
@@ -101,35 +89,23 @@ async function performExtractAndSave(url) {
       zip.file(baseFileName, xmlContent);
 
     } catch (error) {
-      console.error('Erreur en récupérant le contenu :', error);
+      console.error('Error fetching content:', error);
     }
   }));
 
   const zipBlob = await zip.generateAsync({ type: 'blob' });
 
-  // Generate a unique zip file name
-  const zipBaseFileName = 'xml_archive';
-  const zipFileName = await generateUniqueZipFileName(zipBaseFileName, addedFileNames);
-
-  // Check if the generated zip file name already exists in the download folder
-  const existingDownloads = await browser.downloads.search({ filename: zipFileName });
-  if (existingDownloads.length > 0) {
-    // Generate a unique name if the file already exists
-    const uniqueZipFileName = await generateUniqueZipFileName(zipBaseFileName, addedFileNames);
-    // Update the zip file name to the unique name
-    zipFileName = uniqueZipFileName;
-  }
-
+  const zipFileName = 'xml_archive.zip';
   const downloadPromise = new Promise((resolve, reject) => {
-    browser.downloads.download({
+    chrome.downloads.download({
       url: URL.createObjectURL(zipBlob),
       filename: zipFileName,
-      saveAs: false,
+      saveAs: true,
     }, downloadId => {
       if (downloadId) {
         resolve(zipFileName);
       } else {
-        reject(new Error(`Echec au téléchargement de ${zipFileName}`));
+        reject(new Error(`Failed to initiate download for ${zipFileName}`));
       }
     });
   });
@@ -138,3 +114,5 @@ async function performExtractAndSave(url) {
 
   return Array.from(addedFileNames);
 }
+
+

@@ -1,18 +1,39 @@
-browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
-  if (message.action === 'performExtraction') {
+document.addEventListener('DOMContentLoaded', function () {
+  const extractButton = document.getElementById('extractButton');
+  const urlDisplay = document.getElementById('urlDisplay');
+  const statusDiv = document.getElementById('status');
+
+  extractButton.addEventListener('click', async function () {
     try {
-      const url = message.url;
+      let response;
+      
+      if (typeof browser !== 'undefined' && browser.runtime) {
+        response = await browser.runtime.sendMessage({ action: 'getTabUrl' });
+      } else if (typeof chrome !== 'undefined' && chrome.runtime) {
+        response = await new Promise((resolve, reject) => {
+          chrome.runtime.sendMessage({ action: 'getTabUrl' }, resolve);
+        });
+      } else {
+        throw new Error('Navigateur non pris en charge');
+      }
 
-      const fetchedUrls = await performExtractAndSave(url);
+      const url = response.url;
+      if (url) {
+        urlDisplay.textContent = `URL: ${url}`;
+        statusDiv.textContent = 'Extraction en cours...';
 
-      // Send the result back to the content script
-      sendResponse({ success: true, fetchedUrls });
+        const fetchedUrls = await performExtractAndSave(url);
+
+        const downloadedFilesContainer = document.getElementById('downloadedFiles');
+        downloadedFilesContainer.innerHTML = `Fichiers téléchargés :<br>${fetchedUrls.join('<br>')}`;
+
+        statusDiv.textContent = 'Fini !';
+      }
     } catch (error) {
       console.error('Error:', error);
-      // Send an error response back to the content script
-      sendResponse({ success: false, error: 'An error occurred' });
+      statusDiv.textContent = 'An error occurred';
     }
-  }
+  });
 });
 
 async function performExtractAndSave(url) {
@@ -88,7 +109,7 @@ async function performExtractAndSave(url) {
       browser.downloads.download({
         url: URL.createObjectURL(zipBlob),
         filename: zipFileName,
-        saveAs: false,
+        saveAs: true,
       }).then(downloadItem => {
         if (downloadItem) {
           resolve(zipFileName);

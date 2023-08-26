@@ -4,10 +4,6 @@ body {
   height: 500px;
 }
 
-div {
- 	font: "SF Pro Text", sans-serif;
-}
-
 .hidden {
   display: none;
 }
@@ -47,5 +43,3 @@ button:active {
   cursor: pointer;
   background-color: #004db3;
 }
-
-
