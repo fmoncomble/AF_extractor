@@ -6,6 +6,9 @@ const extractButton = document.createElement('button');
 extractButton.id = 'extractButton';
 extractButton.textContent = 'Extraire';
 anchor.appendChild(extractButton);
+if (!extractButton) {
+	console.error('Error: unable to inject button')
+};
 
 
 
