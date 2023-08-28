@@ -38,9 +38,10 @@
 		}
 	],
 	
-	  "browser_specific_settings": {
-    "gecko": {
-      "id": "{a80222a0-a678-4960-a7a6-4f7d01d1255d}",
-      "update_url": "https://github.com/fmoncomble/af_speechify/releases/latest/download/update_manifest.json"
-    },
+	"browser_specific_settings": {
+    	"gecko": {
+	      "id": "{a80222a0-a678-4960-a7a6-4f7d01d1255d}",
+    	  "update_url": "https://github.com/fmoncomble/af_speechify/releases/latest/download/update_manifest.json"
+	    }
+	}
 }
