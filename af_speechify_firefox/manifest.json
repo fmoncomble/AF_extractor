@@ -1,9 +1,9 @@
 {
 	"manifest_version": 2,
 	"name": "af_speechify",
-	"version": "0.3",
+	"version": "0.5",
 
-	"description": "Extrait le texte des discours de l'Académie française à partir d'une page de recherche et les enregistre au format XML pour import dans TXM",
+	"description": "Extrait les textes de l'Académie française et les enregistre au format XML pour import dans TXM",
 	"homepage_url": "https://github.com/fmoncomble/af_speechify",
 	"icons": {
 		"48": "icons/af-48.png",
@@ -11,6 +11,8 @@
 	},
 
 	"permissions": ["activeTab", "downloads", "storage", "*://www.academie-francaise.fr/*"],
+	
+
 
 
 	"background": {
@@ -20,9 +22,19 @@
 	
 	"content_scripts": [
 		{
-			"matches": ["https://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques*"],
-			"js": ["content_script.js"],
-			"css": ["content_script.css"]
+			"matches": ["*://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques*"],
+			"js": ["content_scripts/content_discours.js"],
+			"css": ["content_scripts/content_green.css"]
+		},
+		{
+			"matches": ["*://www.academie-francaise.fr/dire-ne-pas-dire/recherche*"],
+			"js": ["content_scripts/content_dnpd.js"],
+			"css": ["content_scripts/content_red.css"]
+		},
+		{
+			"matches": ["*://www.academie-francaise.fr/questions-de-langue*"],
+			"js": ["content_scripts/content_qdl.js"],
+			"css": ["content_scripts/content_red.css"]
 		}
 	]
 }

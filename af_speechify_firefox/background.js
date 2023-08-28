@@ -3,22 +3,51 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     try {
       const url = message.url;
 
-      performExtractAndSave(url)
-        .then(fetchedUrls => {
-          sendResponse({ success: true, fetchedUrls });
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          sendResponse({ success: false, error: 'An error occurred' });
-        });
+      if (url.includes('www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques')) {
+        performExtractAndSave(url)
+          .then(fetchedUrls => {
+            sendResponse({ success: true, fetchedUrls });
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            sendResponse({ success: false, error: 'An error occurred' });
+          });
+
+        return true; // Indicate that sendResponse will be called asynchronously
+        
+      } else if (url.includes('www.academie-francaise.fr/dire-ne-pas-dire')) {
+        performExtractAndSaveDireNePasDire(url)
+          .then(fetchedTitles => {
+            sendResponse({ success: true, fetchedTitles });
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            sendResponse({ success: false, error: 'An error occurred' });
+          });
+    } else if (url.includes('www.academie-francaise.fr/questions-de-langue')) {
+        performExtractAndSaveQdl(url)
+          .then(fetchedQuestions => {
+            sendResponse({ success: true, fetchedQuestions });
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            sendResponse({ success: false, error: 'An error occurred' });
+          });
+          
+      } else {
+        sendResponse({ success: false, error: 'Unsupported URL' });
+      }
 
       return true; // Indicate that sendResponse will be called asynchronously
+
     } catch (error) {
       console.error('Error:', error);
       sendResponse({ success: false, error: 'An error occurred' });
     }
   }
 });
+
+
 
 async function performExtractAndSave(url) {
   const parser = new DOMParser();
@@ -84,10 +113,15 @@ async function performExtractAndSave(url) {
       console.error('Error fetching content:', error);
     }
   }));
-
   const zipBlob = await zip.generateAsync({ type: 'blob' });
 
-  const zipFileName = 'xml_archive.zip';
+	const h1Element = doc.querySelector('h1');
+	const pageTitle = h1Element.textContent.trim();
+	const cleanPageTitle = pageTitle.replace(`Thème : `, '');
+
+	// Use the cleaned pageTitle as the zipFileName
+	const zipFileName = `${cleanPageTitle}.zip`;
+  
   const downloadPromise = new Promise((resolve, reject) => {
     if (typeof browser !== 'undefined' && browser.downloads) {
       browser.downloads.download({
@@ -120,5 +154,172 @@ async function performExtractAndSave(url) {
 
   await downloadPromise;
 
-  return Array.from(addedFileNames);
+  return Array.from(addedFileNames)
+
 }
+ 
+
+async function performExtractAndSaveDireNePasDire(url) {
+  const parser = new DOMParser();
+  const response = await fetch(url);
+  const html = await response.text();
+
+  const doc = parser.parseFromString(html, 'text/html');
+
+  const divs = doc.querySelectorAll('[id^="node-"]');
+  const extractedTitles = [];
+
+  const zip = new JSZip();
+
+  await Promise.all(Array.from(divs).map(div => {
+    try {
+      const title = div.querySelector('h2').textContent.trim();
+      const dateElement = div.querySelector('p.date span[content]');
+      const date = dateElement ? dateElement.getAttribute('content') : 'Unknown Date';
+      
+      // Modify the following line to extract text from the desired div
+      const textDiv = div.querySelector('.academie-columns.academie-columns-1');
+      const text = textDiv ? textDiv.textContent.trim() : '';
+
+      const xmlContent = `
+        <Text title="${title}" date="${date}">
+          ${text}
+        </Text>
+      `;
+
+      const fileName = `${title}.xml`;
+
+      zip.file(fileName, xmlContent);
+      extractedTitles.push(title);
+    } catch (error) {
+      console.error('Error extracting content:', error);
+    }
+  }));
+
+  const zipBlob = await zip.generateAsync({ type: 'blob' });
+
+  const category = doc.querySelector('.category.color');
+  const fileCategory = category.textContent.trim();
+  const zipFileName = `${fileCategory}.zip`;
+  
+  const downloadPromise = new Promise((resolve, reject) => {
+    if (typeof browser !== 'undefined' && browser.downloads) {
+      browser.downloads.download({
+        url: URL.createObjectURL(zipBlob),
+        filename: zipFileName,
+        saveAs: false,
+      }).then(downloadItem => {
+        if (downloadItem) {
+          resolve(zipFileName);
+        } else {
+          reject(new Error(`Failed to initiate download for ${zipFileName}`));
+        }
+      }).catch(reject);
+    } else if (typeof chrome !== 'undefined' && chrome.downloads) {
+      chrome.downloads.download({
+        url: URL.createObjectURL(zipBlob),
+        filename: zipFileName,
+        saveAs: true,
+      }, downloadId => {
+        if (downloadId) {
+          resolve(zipFileName);
+        } else {
+          reject(new Error(`Failed to initiate download for ${zipFileName}`));
+        }
+      });
+    } else {
+      reject(new Error('Download API not available'));
+    }
+  });
+
+  await downloadPromise;
+
+  return extractedTitles;
+}
+
+async function performExtractAndSaveQdl(url) {
+  const parser = new DOMParser();
+  const response = await fetch(url);
+  const html = await response.text();
+
+  const doc = parser.parseFromString(html, 'text/html');
+
+  const h3Elements = doc.querySelectorAll('h3');
+  const extractedQuestions = [];
+
+  const zip = new JSZip();
+
+  await Promise.all(Array.from(h3Elements).map(h3 => {
+    try {
+      const title = h3.textContent.trim();
+      const cleanTitle = title.replace(' (sommaire)', '').replace('\/', '-');
+      
+      // Modify the following lines to extract text from the desired div
+      const textParagraphs = Array.from(getFollowingParagraphs(h3)); // Select all <p> elements following the <h3>
+      const text = textParagraphs.map(paragraph => paragraph.textContent.trim()).join('\n'); // Combine text content of all paragraphs
+
+      const xmlContent = `
+        <Text title="${cleanTitle}">
+          ${text}
+        </Text>
+      `;
+
+      const fileName = `${cleanTitle}.xml`;
+
+      zip.file(fileName, xmlContent);
+      extractedQuestions.push(cleanTitle);
+    } catch (error) {
+      console.error('Error extracting content:', error);
+    }
+  }));
+
+  const zipBlob = await zip.generateAsync({ type: 'blob' });
+
+  const zipFileName = 'Questions_de_langue.zip'; // Modify as needed
+  
+  const downloadPromise = new Promise((resolve, reject) => {
+    if (typeof browser !== 'undefined' && browser.downloads) {
+      browser.downloads.download({
+        url: URL.createObjectURL(zipBlob),
+        filename: zipFileName,
+        saveAs: false,
+      }).then(downloadItem => {
+        if (downloadItem) {
+          resolve(zipFileName);
+        } else {
+          reject(new Error(`Failed to initiate download for ${zipFileName}`));
+        }
+      }).catch(reject);
+    } else if (typeof chrome !== 'undefined' && chrome.downloads) {
+      chrome.downloads.download({
+        url: URL.createObjectURL(zipBlob),
+        filename: zipFileName,
+        saveAs: true,
+      }, downloadId => {
+        if (downloadId) {
+          resolve(zipFileName);
+        } else {
+          reject(new Error(`Failed to initiate download for ${zipFileName}`));
+        }
+      });
+    } else {
+      reject(new Error('Download API not available'));
+    }
+  });
+
+  await downloadPromise;
+
+  return extractedQuestions;
+}
+
+function* getFollowingParagraphs(element) {
+  let sibling = element.nextElementSibling;
+  while (sibling !== null && sibling.tagName.toLowerCase() === 'p') {
+    yield sibling;
+    sibling = sibling.nextElementSibling;
+  }
+}
+
+
+
+
