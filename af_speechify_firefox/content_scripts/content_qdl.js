@@ -37,7 +37,7 @@ extractButton.addEventListener('click', () => {
       // Display the downloaded files
       const downloadedFilesContainer = document.createElement('div');
       downloadedFilesContainer.classList.add('fileList');
-      downloadedFilesContainer.innerHTML = `Fichiers téléchargés :<br>${response.fetchedQuestions.join(', ')}<br>Fini !`;
+      downloadedFilesContainer.textContent = `Fichiers téléchargés :\n${response.fetchedQuestions.join(', ')}\nFini !`;
       anchor.appendChild(downloadedFilesContainer);
     } else {
       console.error('Error:', response.error);
