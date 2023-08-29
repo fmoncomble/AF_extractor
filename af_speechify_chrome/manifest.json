@@ -13,29 +13,27 @@
 
 	"permissions": ["activeTab", "downloads", "storage", "*://www.academie-francaise.fr/*"],
 	
-
-
-
 	"background": {
-    "scripts": ["background.js", "jszip.min.js"],
+    "page": "background.html",
     "persistent": false
 	},
 	
 	"content_scripts": [
 		{
 			"matches": ["*://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques*"],
-			"js": ["content_scripts/content_discours.js"],
+			"js": ["content_scripts/content_discours.js", "jszip.min.js"],
 			"css": ["content_scripts/content_green.css"]
 		},
 		{
 			"matches": ["*://www.academie-francaise.fr/dire-ne-pas-dire/recherche*"],
-			"js": ["content_scripts/content_dnpd.js"],
+			"js": ["content_scripts/content_dnpd.js", "jszip.min.js"],
 			"css": ["content_scripts/content_red.css"]
 		},
 		{
 			"matches": ["*://www.academie-francaise.fr/questions-de-langue*"],
-			"js": ["content_scripts/content_qdl.js"],
+			"js": ["content_scripts/content_qdl.js", "jszip.min.js"],
 			"css": ["content_scripts/content_red.css"]
 		}
 	]
+
 }
