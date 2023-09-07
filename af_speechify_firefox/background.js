@@ -73,15 +73,16 @@ async function performExtractAndSave(url) {
   await Promise.all(urls.map(async url => {
     try {
       const contentResponse = await fetch(url);
+      console.log('URL = ', contentResponse);
       const content = await contentResponse.text();
       const contentDoc = parser.parseFromString(content, 'text/html');
 
-      const bodyDiv = contentDoc.querySelector('.academie-columns.academie-columns-1');
+      const bodyDiv = contentDoc.querySelector('.academie-columns');
       const authorElement = contentDoc.querySelector('.category.color');
       const dateElement = contentDoc.querySelector('[property="dc:date dc:created"]');
 
       if (!bodyDiv || !authorElement) {
-        console.error('Error: Required elements not found');
+        console.error('Error: Required elements not found for ', authorElement.querySelector('a').textContent);
         return;
       }
 
