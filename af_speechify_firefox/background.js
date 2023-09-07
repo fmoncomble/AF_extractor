@@ -87,7 +87,42 @@ async function performExtractAndSave(url) {
 
       const text = bodyDiv.textContent;
       const author = authorElement.querySelector('a').textContent;
-      const date = dateElement ? dateElement.getAttribute('content') : 'Unknown Date';
+      const dateString = dateElement ? dateElement.textContent : 'Unknown Date';
+      
+      // Function to convert date into ISO format (YYYY-MM-DD)
+      function convertFrenchDateToISO(dateString) {
+      	const monthMap = {
+      		janvier: '01',
+      		février: '02',
+      		mars: '03',
+      		avril: '04',
+      		mai: '05',
+      		juin: '06',
+      		juillet: '07',
+      		août: '08',
+      		septembre: '09',
+      		octobre: '10',
+      		novembre: '11',
+      		décembre: '12',
+      	};
+      	const datePattern = /Le (\d{1,2}) ([\p{L}\s]+) (\d{4})/u;
+      	const match = dateString.match(datePattern);
+      	if (match) {
+      		let day = match[1];
+      		const month = monthMap[match[2].toLowerCase()];
+      		const year = match [3];
+      		if (day.length === 1) {
+      			day = '0' + day;
+      		}
+      		if (day && month && year) {
+      			return `${year}-${month}-${day}`;
+      		}
+      	}
+      	return null;
+      }
+      
+      const date = convertFrenchDateToISO(dateString);
+      console.log('Speech date: ', date);
 
       let baseFileName = `${author}.xml`;
       let index = 1;
@@ -175,7 +210,42 @@ async function performExtractAndSaveDireNePasDire(url) {
     try {
       const title = div.querySelector('h2').textContent.trim();
       const dateElement = div.querySelector('p.date span[content]');
-      const date = dateElement ? dateElement.getAttribute('content') : 'Unknown Date';
+      const dateString = dateElement ? dateElement.textContent : 'Unknown Date';
+      
+      // Function to convert date into ISO format (YYYY-MM-DD)
+      function convertFrenchDateToISO(dateString) {
+      	const monthMap = {
+      		janvier: '01',
+      		février: '02',
+      		mars: '03',
+      		avril: '04',
+      		mai: '05',
+      		juin: '06',
+      		juillet: '07',
+      		août: '08',
+      		septembre: '09',
+      		octobre: '10',
+      		novembre: '11',
+      		décembre: '12',
+      	};
+      	const datePattern = /Le (\d{1,2}) ([\p{L}\s]+) (\d{4})/u;
+      	const match = dateString.match(datePattern);
+      	if (match) {
+      		let day = match[1];
+      		const month = monthMap[match[2].toLowerCase()];
+      		const year = match [3];
+      		if (day.length === 1) {
+      			day = '0' + day;
+      		}
+      		if (day && month && year) {
+      			return `${year}-${month}-${day}`;
+      		}
+      	}
+      	return null;
+      }
+      
+      const date = convertFrenchDateToISO(dateString);
+      console.log('Post date: ', date);
       
       // Modify the following line to extract text from the desired div
       const textDiv = div.querySelector('.academie-columns.academie-columns-1');

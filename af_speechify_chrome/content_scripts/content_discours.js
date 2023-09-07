@@ -39,7 +39,7 @@ chrome.runtime.sendMessage({ action: 'performExtraction', url: window.location.h
     // Display the downloaded files
     const downloadedFilesContainer = document.createElement('div');
     downloadedFilesContainer.classList.add('fileList');
-    downloadedFilesContainer.innerHTML = `Fichiers téléchargés :<br>${response.fetchedUrls.join(', ')}<br>Fini !`;
+    downloadedFilesContainer.textContent = `Fichiers téléchargés :\n${response.fetchedUrls.join(', ')}\nFini !`;
     anchor.appendChild(downloadedFilesContainer);
   } else {
     console.error('Error:', response.error);

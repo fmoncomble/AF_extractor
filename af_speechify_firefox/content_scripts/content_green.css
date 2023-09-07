@@ -34,3 +34,7 @@ button:hover {
   100% { transform: rotate(360deg); }
 }
 
+div.fileList {
+      white-space: pre-wrap;
+}
+

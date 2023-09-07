@@ -1,5 +1,6 @@
 // contentScript.js
 
+
 // Inject the button into the page
 const anchor = document.querySelector('h1');
 const extractButton = document.createElement('button');
@@ -37,7 +38,7 @@ extractButton.addEventListener('click', () => {
       // Display the downloaded files
       const downloadedFilesContainer = document.createElement('div');
       downloadedFilesContainer.classList.add('fileList');
-      downloadedFilesContainer.innerHTML = `Fichiers téléchargés :<br>${response.fetchedTitles.join(', ')}<br>Fini !`;
+      downloadedFilesContainer.textContent = `Fichiers téléchargés :\n${response.fetchedTitles.join(', ')}\nFini !`;
       anchor.appendChild(downloadedFilesContainer);
     } else {
       console.error('Error:', response.error);
