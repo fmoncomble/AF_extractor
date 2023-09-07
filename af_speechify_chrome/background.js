@@ -77,16 +77,19 @@ async function performExtractAndSave(url) {
       const content = await contentResponse.text();
       const contentDoc = parser.parseFromString(content, 'text/html');
 
-      const bodyDiv = contentDoc.querySelector('.academie-columns');
+      const bodyDivs = contentDoc.querySelectorAll('.academie-columns');
       const authorElement = contentDoc.querySelector('.category.color');
       const dateElement = contentDoc.querySelector('[property="dc:date dc:created"]');
 
-      if (!bodyDiv || !authorElement) {
+      if (!bodyDivs.length || !authorElement) {
         console.error('Error: Required elements not found for ', authorElement.querySelector('a').textContent);
         return;
       }
 
-      const text = bodyDiv.textContent;
+      let text = '';
+      bodyDivs.forEach((div) => {
+      	text += div.textContent;
+      });
       const author = authorElement.querySelector('a').textContent;
       const dateString = dateElement ? dateElement.textContent : 'Unknown Date';
       
