@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "af_speechify",
 
-	"version": "0.6.3",
+	"version": "0.6.4",
 
 	"description": "Extrait les textes de l'Académie française et les enregistre au format XML pour import dans TXM",
 	"homepage_url": "https://github.com/fmoncomble/af_speechify",

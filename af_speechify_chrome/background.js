@@ -139,11 +139,9 @@ async function performExtractAndSave(url) {
 
       addedFileNames.add(baseFileName);
 
-      const xmlContent = `
-        <Text author="${author}" date="${date}">
-          ${text}
-        </Text>
-      `;
+      const xmlContent = `<Text author="${author}" date="${date}">
+${text}
+</Text>`;
 
       // Add the XML content to the zip archive
       zip.file(baseFileName, xmlContent);
@@ -255,11 +253,9 @@ async function performExtractAndSaveDireNePasDire(url) {
       const textDiv = div.querySelector('.academie-columns.academie-columns-1');
       const text = textDiv ? textDiv.textContent.trim() : '';
 
-      const xmlContent = `
-        <Text title="${title}" date="${date}">
-          ${text}
-        </Text>
-      `;
+      const xmlContent = `<Text title="${title}" date="${date}">
+${text}
+</Text>`;
 
       const fileName = `${title}.xml`;
 
@@ -332,11 +328,9 @@ async function performExtractAndSaveQdl(url) {
       const textParagraphs = Array.from(getFollowingParagraphs(h3)); // Select all <p> elements following the <h3>
       const text = textParagraphs.map(paragraph => paragraph.textContent.trim()).join('\n'); // Combine text content of all paragraphs
 
-      const xmlContent = `
-        <Text title="${cleanTitle}">
-          ${text}
-        </Text>
-      `;
+      const xmlContent = `<Text title="${cleanTitle}">
+${text}
+</Text>`;
 
       const fileName = `${cleanTitle}.xml`;
 
