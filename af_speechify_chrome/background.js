@@ -257,7 +257,7 @@ async function performExtractAndSaveDireNePasDire(url) {
 ${text}
 </Text>`;
 
-      const fileName = `${title}.xml`;
+      const fileName = `${date}_${title}.xml`;
 
       zip.file(fileName, xmlContent);
       extractedTitles.push(title);
