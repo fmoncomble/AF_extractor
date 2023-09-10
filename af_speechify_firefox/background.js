@@ -128,12 +128,12 @@ async function performExtractAndSave(url) {
       const date = convertFrenchDateToISO(dateString);
       console.log('Speech date: ', date);
 
-      let baseFileName = `${author}.xml`;
+      let baseFileName = `${date}_${author}.xml`;
       let index = 1;
 
       // Append a number to the file name to make it unique
       while (addedFileNames.has(baseFileName)) {
-        baseFileName = `${author}_${index}.xml`;
+        baseFileName = `${date}_${author}_${index}.xml`;
         index++;
       }
 
@@ -156,7 +156,7 @@ async function performExtractAndSave(url) {
 
 	const h1Element = doc.querySelector('h1');
 	const pageTitle = h1Element.textContent.trim();
-	const cleanPageTitle = pageTitle.replace(`Thème : `, '');
+	const cleanPageTitle = pageTitle.replace(/.+ : /, '');
 
 	// Use the cleaned pageTitle as the zipFileName
 	const zipFileName = `${cleanPageTitle}.zip`;
