@@ -4,7 +4,7 @@
 Une extension pour extraire les textes de l'Académie française sous forme de fichiers .xml prêts à importer dans [TXM](https://txm.gitpages.huma-num.fr/textometrie/).
 
 ## Firefox
-- [Installer l'extension](https://github.com/fmoncomble/af_speechify/releases/latest/download/af_speechify_ff.xpi)
+- [Installer l'extension](https://github.com/fmoncomble/af_speechify/releases/latest/download/af_speechify_ff.xpi) <- clic
 - Ouvrir :
 	- une page listant des discours de l'AF ([exemple](https://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques))
 	- ou une page de recherche dans la rubrique "Dire, ne pas dire" ([exemple](https://www.academie-francaise.fr/dire-ne-pas-dire/recherche?titre=&rubrique=364&date=&form_build_id=form-XiN72sBPvnkA-n23XgPVZ_joYjulLrBILhIIyR2euaM&form_id=academie_blog_search_form&op=Rechercher))
