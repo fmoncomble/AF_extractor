@@ -138,8 +138,13 @@ async function performExtractAndSave(url) {
       }
 
       addedFileNames.add(baseFileName);
+      
+		const h1Element = doc.querySelector('h1');
+		const pageTitle = h1Element.textContent.trim();
+		const cleanPageTitle = pageTitle.replace(/.+ : /, '');
 
-      const xmlContent = `<text author="${author}" date="${date}">
+      const xmlContent = `<text author="${author}" date="${date}" cat="discours" sscat="${cleanPageTitle}">
+<ref target="${url}">Lien vers l'original</ref><lb></lb><lb></lb>
 ${text}
 </text>`;
 
@@ -249,11 +254,19 @@ async function performExtractAndSaveDireNePasDire(url) {
       const date = convertFrenchDateToISO(dateString);
       console.log('Post date: ', date);
       
+      const itemUrl = 'https://www.academie-francaise.fr' + div.querySelector('a').getAttribute("href");
+      console.log('Post URL: ', itemUrl);
+      
+      
       // Modify the following line to extract text from the desired div
       const textDiv = div.querySelector('.academie-columns.academie-columns-1');
       const text = textDiv ? textDiv.textContent.trim() : '';
+      
+	  const category = doc.querySelector('.category.color');
+	  const fileCategory = category.textContent.trim();
 
-      const xmlContent = `<text title="${title}" date="${date}">
+      const xmlContent = `<text title="${title}" date="${date}" cat="dnpd" sscat="${fileCategory}">
+<ref target="${itemUrl}">Lien vers l'original</ref><lb></lb><lb></lb>
 ${text}
 </text>`;
 
@@ -267,9 +280,10 @@ ${text}
   }));
 
   const zipBlob = await zip.generateAsync({ type: 'blob' });
-
+      
   const category = doc.querySelector('.category.color');
   const fileCategory = category.textContent.trim();
+
   const zipFileName = `${fileCategory}.zip`;
   
   const downloadPromise = new Promise((resolve, reject) => {
@@ -322,13 +336,14 @@ async function performExtractAndSaveQdl(url) {
   await Promise.all(Array.from(h3Elements).map(h3 => {
     try {
       const title = h3.textContent.trim();
-      const cleanTitle = title.replace(' (sommaire)', '').replace('\/', '-');
+      const cleanTitle = title.replace(' (sommaire)', '').replace('/', '_').replace(':', '_');
       
       // Modify the following lines to extract text from the desired div
       const textParagraphs = Array.from(getFollowingParagraphs(h3)); // Select all <p> elements following the <h3>
       const text = textParagraphs.map(paragraph => paragraph.textContent.trim()).join('\n'); // Combine text content of all paragraphs
 
-      const xmlContent = `<text title="${cleanTitle}">
+      const xmlContent = `<text title="${cleanTitle}" cat="qdl">
+<ref target="https://www.academie-francaise.fr/questions-de-langue">Lien vers l'original</ref><lb></lb><lb></lb>
 ${text}
 </text>`;
 
