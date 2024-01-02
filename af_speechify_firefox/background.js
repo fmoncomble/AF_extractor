@@ -90,6 +90,7 @@ async function performExtractAndSave(url) {
       bodyDivs.forEach((div) => {
       	text += div.textContent;
       });
+      const title = contentDoc.querySelector('h1').textContent.trim();
       const author = authorElement.querySelector('a').textContent;
       const dateString = dateElement ? dateElement.textContent : 'Unknown Date';
       
@@ -143,7 +144,7 @@ async function performExtractAndSave(url) {
 		const pageTitle = h1Element.textContent.trim();
 		const cleanPageTitle = pageTitle.replace(/.+ : /, '');
 
-      const xmlContent = `<text author="${author}" date="${date}" cat="discours" sscat="${cleanPageTitle}">
+      const xmlContent = `<text author="${author}" title="${title}" date="${date}" cat="discours" sscat="${cleanPageTitle}">
 <ref target="${url}">Lien vers l'original</ref><lb></lb><lb></lb>
 ${text}
 </text>`;
