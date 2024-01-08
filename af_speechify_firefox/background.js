@@ -216,7 +216,7 @@ async function performExtractAndSaveDireNePasDire(url) {
 
   await Promise.all(Array.from(divs).map(div => {
     try {
-      const title = div.querySelector('h2').textContent.trim();
+      const title = div.querySelector('h2').textContent.replaceAll(/\p{P}/gu, '').trim().replaceAll(/\s+/g, '_');
       const dateElement = div.querySelector('p.date span[content]');
       const dateString = dateElement ? dateElement.textContent : 'Unknown Date';
       
@@ -261,10 +261,10 @@ async function performExtractAndSaveDireNePasDire(url) {
       
       // Modify the following line to extract text from the desired div
       const textDiv = div.querySelector('.academie-columns.academie-columns-1');
-      const text = textDiv ? textDiv.textContent.trim() : '';
+      const text = textDiv ? textDiv.textContent.replaceAll('\&', 'et').replaceAll(`<?xml:namespace prefix = o />`, '').trim() : '';
       
-	  const category = doc.querySelector('.category.color');
-	  const fileCategory = category.textContent.trim();
+	  const category = div.querySelector('.category.color');
+	  const fileCategory = category.textContent.replace('\&', 'et').trim();
 
       const xmlContent = `<text title="${title}" date="${date}" cat="dnpd" sscat="${fileCategory}">
 <ref target="${itemUrl}">Lien vers l'original</ref><lb></lb><lb></lb>

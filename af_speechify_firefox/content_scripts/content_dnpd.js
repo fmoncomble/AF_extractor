@@ -1,7 +1,7 @@
 // contentScript.js
 
 // Inject the button into the page
-const anchor = document.querySelector('h1');
+const anchor = document.querySelector('.block.block-academie');
 const extractButton = document.createElement('button');
 extractButton.id = 'extractButton';
 extractButton.textContent = 'Extraire';
