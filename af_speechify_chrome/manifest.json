@@ -17,7 +17,7 @@
 
 
 	"background": {
-    "scripts": ["background.js", "jszip.min.js"],
+    "page": "background.html",
     "persistent": false
 	},
 	
