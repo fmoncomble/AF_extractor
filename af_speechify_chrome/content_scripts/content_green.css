@@ -1,23 +1,77 @@
 button {
-	background-color: white;
-	color: #3D7328;
-	border-radius: 4px
+	background-color: #3D7328;
+	color: white;
+	border-radius: 4px;
+	border-color: #3D7328;
+	cursor: pointer;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 5px;
+	transition: background-color 0.2s;
 }
 
 button:hover {
-	background-color: #3D7328;
-	color: white;
-	border-radius: 4px
+	background-color: #f0f8ec;
+	color: #3D7328;
+	border-radius: 4px;
 }
 
 .fileList {
 	font-family: sans-serif;
-	font-size: small
+	font-size: small;
+}
+
+fieldset {
+	margin-top: 20px;
+	border: 1px solid #3D7328;
+	border-radius: 10px;
+	padding: 10px;
+	color: #3D7328;
+	width: inherit;
+}
+
+legend {
+	background-color: white;
+	border: 1px solid #3D7328;
+	border-radius: 10px;
+	padding: 5px 10px;
+	font-size: medium;
+	font-family: sans-serif;
+	color: #3D7328;
+}
+
+#extractButton,
+.extract-button-container,
+#extractOption {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+label {
+	width: auto;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#extractOption {
+	margin-right: 5px;
+}
+
+.abort-button {
+	display: none;
+	border-color: #e60000;
+	background-color: #e60000;
+	color: white;
+}
+
+.abort-button:hover {
+	background-color: white;
+	color: #e60000;
 }
 
 #extractionMessage {
 	font-family: sans-serif;
-	font-size: small
+	font-size: small;
 }
 
 .spinner {
@@ -36,5 +90,10 @@ button:hover {
 
 div.fileList {
       white-space: pre-wrap;
+}
+
+.extract-button-container {
+	font-size: small;
+	font-family: sans-serif;
 }
 

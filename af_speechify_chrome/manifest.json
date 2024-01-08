@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "af_speechify",
 
-	"version": "0.6.9",
+	"version": "0.7",
 
 	"description": "Extrait les textes de l'Académie française et les enregistre au format XML pour import dans TXM",
 	"homepage_url": "https://github.com/fmoncomble/af_speechify",
@@ -13,27 +13,36 @@
 
 	"permissions": ["activeTab", "downloads", "storage", "*://www.academie-francaise.fr/*"],
 	
+
+
+
 	"background": {
-    "page": "background.html",
+    "scripts": ["background.js", "jszip.min.js"],
     "persistent": false
 	},
 	
 	"content_scripts": [
 		{
 			"matches": ["*://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques*"],
-			"js": ["content_scripts/content_discours.js", "jszip.min.js"],
+			"js": ["content_scripts/content_discours.js"],
 			"css": ["content_scripts/content_green.css"]
 		},
 		{
-			"matches": ["*://www.academie-francaise.fr/dire-ne-pas-dire/recherche*"],
-			"js": ["content_scripts/content_dnpd.js", "jszip.min.js"],
+			"matches": ["*://www.academie-francaise.fr/dire-ne-pas-dire*"],
+			"js": ["content_scripts/content_dnpd.js"],
 			"css": ["content_scripts/content_red.css"]
 		},
 		{
 			"matches": ["*://www.academie-francaise.fr/questions-de-langue*"],
-			"js": ["content_scripts/content_qdl.js", "jszip.min.js"],
+			"js": ["content_scripts/content_qdl.js"],
 			"css": ["content_scripts/content_red.css"]
 		}
-	]
-
+	],
+	
+	"browser_specific_settings": {
+    	"gecko": {
+	      "id": "{a80222a0-a678-4960-a7a6-4f7d01d1255d}",
+    	  "update_url": "https://github.com/fmoncomble/af_speechify/releases/latest/download/update_manifest.json"
+	    }
+	}
 }

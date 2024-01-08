@@ -1,4 +1,5 @@
 // contentScript.js
+console.log('AF content script injected');
 
 // Inject the button into the page
 const anchor = document.querySelector('h1');
@@ -30,6 +31,8 @@ extractButton.addEventListener('click', () => {
   extractionContainer.style.display = 'block';
 
   browser.runtime.sendMessage({ action: 'performExtraction', url: window.location.href }, response => {
+    console.log('Response object: ', response);
+    
     // Hide the extraction container
     extractionContainer.style.display = 'none';
 
@@ -37,7 +40,7 @@ extractButton.addEventListener('click', () => {
       // Display the downloaded files
       const downloadedFilesContainer = document.createElement('div');
       downloadedFilesContainer.classList.add('fileList');
-      downloadedFilesContainer.textContent = `Fichiers téléchargés :\n${response.fetchedQuestions.join(', ')}\nFini !`;
+      downloadedFilesContainer.textContent = `Fini !\n${response.fetchedQuestions.length} fichiers téléchargés:\n${response.fetchedQuestions.join(', ')}.`;
       anchor.appendChild(downloadedFilesContainer);
     } else {
       console.error('Error:', response.error);
