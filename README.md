@@ -36,6 +36,6 @@ Fenêtre TXM :
 <img width="1503" alt="Screenshot 2024-01-09 at 20 30 55" src="https://github.com/fmoncomble/af_speechify/assets/59739627/41d8dec4-9497-46ab-9754-7cb030fbbcb9">
 
 ## Citer ce programme
-Moncomble, F. (2024). AF_speechify (Version 0.7) [JavaScript]. Arras, France : Université d’Artois. https://github.com/fmoncomble/af_speechify
+Moncomble, F. (2024). *AF_speechify* (Version 0.7) [JavaScript]. Arras, France : Université d’Artois. https://github.com/fmoncomble/af_speechify
 
 
