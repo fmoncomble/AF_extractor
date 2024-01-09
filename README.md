@@ -28,8 +28,14 @@ Une extension pour extraire les textes de l'Académie française sous forme de f
 ## Démonstration
 Vidéo :  
 https://github.com/fmoncomble/af_speechify/assets/59739627/6e84a671-1b80-4edb-95ba-d67ef6cc44e1  
+  
 Fichier .xml :  
 <img width="1173" alt="Screenshot 2024-01-09 at 20 06 51" src="https://github.com/fmoncomble/af_speechify/assets/59739627/c0707bf0-2e58-41be-b72f-50cbfa64314d">  
+  
 Fenêtre TXM :  
 <img width="1503" alt="Screenshot 2024-01-09 at 20 30 55" src="https://github.com/fmoncomble/af_speechify/assets/59739627/41d8dec4-9497-46ab-9754-7cb030fbbcb9">
+
+## Citer ce programme
+Moncomble, F. (2024). AF_speechify (Version 0.7) [JavaScript]. Arras, France : Université d’Artois. https://github.com/fmoncomble/af_speechify
+
 
