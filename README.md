@@ -26,8 +26,8 @@ Une extension pour extraire les textes de l'Académie française sous forme de f
 - Chrome/Edge : Choisir le dossier de destination pour l'archive .zip contenant les fichiers .xml
 
 ## Démonstration
-Vidéo :  
-https://github.com/fmoncomble/af_speechify/assets/59739627/6e84a671-1b80-4edb-95ba-d67ef6cc44e1  
+Extraction :  
+<video src="https://github.com/fmoncomble/af_speechify/assets/59739627/6e84a671-1b80-4edb-95ba-d67ef6cc44e1"/>  
   
 Fichier .xml :  
 <img width="1173" alt="Screenshot 2024-01-09 at 20 06 51" src="https://github.com/fmoncomble/af_speechify/assets/59739627/c0707bf0-2e58-41be-b72f-50cbfa64314d">  
