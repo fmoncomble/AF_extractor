@@ -1,4 +1,5 @@
-# af_speechify ![af-48](https://github.com/fmoncomble/af_speechify/assets/59739627/ee868342-8616-46e4-acbe-4527799772ce)
+![af-48](https://github.com/fmoncomble/af_speechify/assets/59739627/ee868342-8616-46e4-acbe-4527799772ce)
+# af_speechify
 
 Une extension pour extraire les textes de l'Académie française sous forme de fichiers .xml prêts à importer dans [TXM](https://txm.gitpages.huma-num.fr/textometrie/).
 
