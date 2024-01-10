@@ -1,11 +1,11 @@
 {
 	"manifest_version": 2,
-	"name": "af_speechify",
+	"name": "AF Extractor",
 
 	"version": "0.7.4",
 
 	"description": "Extrait les textes de l'Académie française et les enregistre au format XML pour import dans TXM",
-	"homepage_url": "https://github.com/fmoncomble/af_speechify",
+	"homepage_url": "https://github.com/fmoncomble/AF_extractor",
 	"icons": {
 		"48": "icons/af-48.png",
 		"96": "icons/af-96.png"
