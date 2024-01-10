@@ -37,7 +37,7 @@ label.appendChild(document.createTextNode('Tout extraire'));
 checkboxDiv.appendChild(checkbox);
 checkboxDiv.appendChild(label);
 
-checkbox.addEventListener('change', function() {
+checkbox.addEventListener('change', function () {
 	if (checkbox.checked) {
 		console.log('Full extraction ahead');
 		extractButton.textContent = 'Tout extraire';
@@ -86,17 +86,19 @@ if (lastPageButton) {
 	const totalPageNo = ++lastPageNo;
 	console.log('Total number of pages = ', totalPageNo);
 	label.textContent = `Tout extraire (${totalPageNo} pages)`;
-	
+
 	updateRange();
 
 	function updateRange() {
 		console.log('updateRange function invoked');
 		let port;
 		chrome.runtime.onConnect.addListener(connect);
+
 		function connect(p) {
 			port = p;
 			console.assert(port.name === 'backgroundjs');
 			port.onMessage.addListener((msg) => respond(msg));
+
 			function respond(msg) {
 				if (msg) {
 					console.log('Message from background: ', msg);
@@ -140,38 +142,41 @@ fieldset.appendChild(downloadedFilesContainer);
 
 // Message passing to notify the background script when the button is clicked
 extractButton.addEventListener('click', () => {
-  
-  // Hide extraction buttons and show abort button
-  extractButtonContainer.style.display = 'none';
-  abortButton.style.display = 'inline';
-  
-  // Show the extraction container
-  extractionContainer.style.display = 'block';
+
+	// Hide extraction buttons and show abort button
+	extractButtonContainer.style.display = 'none';
+	abortButton.style.display = 'inline';
+
+	// Show the extraction container
+	extractionContainer.style.display = 'block';
 	downloadedFilesContainer.textContent = '';
-    downloadedFilesContainer.style.display = 'none';
+	downloadedFilesContainer.style.display = 'none';
 
-	chrome.runtime.sendMessage({ action: 'performExtraction', url: window.location.href }, response => {
-	  console.log('Response object:', response); // Log the entire response object
+	chrome.runtime.sendMessage({
+		action: 'performExtraction',
+		url: window.location.href
+	}, response => {
+		console.log('Response object:', response); // Log the entire response object
 
-	  // Hide the extraction container
-	  extractionContainer.style.display = 'none';
-	  
-	  //Reset abort button
-	  abortButton.style.display = 'none';
-	  abortButton.textContent = 'Annuler';
-	  
-	  // Restore extraction buttons
-	  extractButtonContainer.style.display = 'inline-block';
+		// Hide the extraction container
+		extractionContainer.style.display = 'none';
 
-	  if (response.success) {
-		// Display the downloaded files
-		downloadedFilesContainer.style.display = 'block';
-		let firstFiles = response.fetchedTitles.slice(0, 20);
-		downloadedFilesContainer.textContent = `Fini !\n${response.fetchedTitles.length} fichiers téléchargés:\n${firstFiles.join(', ')}...`;
-	  } else {
-		console.error('Error:', response.error);
-		// Handle error
-	  }
+		//Reset abort button
+		abortButton.style.display = 'none';
+		abortButton.textContent = 'Annuler';
+
+		// Restore extraction buttons
+		extractButtonContainer.style.display = 'inline-block';
+
+		if (response.success) {
+			// Display the downloaded files
+			downloadedFilesContainer.style.display = 'block';
+			let firstFiles = response.fetchedTitles.slice(0, 20);
+			downloadedFilesContainer.textContent = `Fini !\n${response.fetchedTitles.length} fichiers téléchargés:\n${firstFiles.join(', ')}...`;
+		} else {
+			console.error('Error:', response.error);
+			// Handle error
+		}
 	});
 
 });

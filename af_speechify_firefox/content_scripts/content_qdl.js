@@ -30,9 +30,12 @@ extractButton.addEventListener('click', () => {
   // Show the extraction container
   extractionContainer.style.display = 'block';
 
-  browser.runtime.sendMessage({ action: 'performExtraction', url: window.location.href }, response => {
+  browser.runtime.sendMessage({
+    action: 'performExtraction',
+    url: window.location.href
+  }, response => {
     console.log('Response object: ', response);
-    
+
     // Hide the extraction container
     extractionContainer.style.display = 'none';
 
