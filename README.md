@@ -4,7 +4,7 @@ Une extension pour extraire les textes de l'Académie française sous forme de f
 
 ### Citer ce programme
 Si vous utilisez cette extension pour vos travaux de recherche, merci de la référencer de la façon suivante :  
-Moncomble, F. (2024). *AF_extractor* (Version 0.7.4) [JavaScript]. Arras, France : Université d’Artois. https://github.com/fmoncomble/af_speechify
+Moncomble, F. (2024). *AF_extractor* (Version 0.7.4) [JavaScript]. Arras, France : Université d’Artois. https://github.com/fmoncomble/AF_extractor
 
 ## Installation
 ### Firefox
