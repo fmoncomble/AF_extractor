@@ -169,7 +169,7 @@ async function performExtractAndSave(url) {
 
 					// Append a number to the file name to make it unique
 					while (addedFileNames.has(baseFileName)) {
-						baseFileName = `${date}_${author}_${index}.xml`;
+						baseFileName = `${date}_${author.replaceAll(/\s/g, '_')}_${index}.xml`;
 						index++;
 					}
 
@@ -179,7 +179,7 @@ async function performExtractAndSave(url) {
 					const pageTitle = h1Element.textContent.trim();
 					const cleanPageTitle = pageTitle.replace(/.+ : /, '');
 
-					const xmlContent = `<text author="${author.replaceAll(/\s/g, '_')}" title="${title}" date="${date}" cat="discours" sscat="${cleanPageTitle}">
+					const xmlContent = `<text author="${author}" title="${title}" date="${date}" cat="discours" sscat="${cleanPageTitle}">
 		<ref target="${url}">Lien vers l'original</ref><lb></lb><lb></lb>
 		${text}
 		</text>`;

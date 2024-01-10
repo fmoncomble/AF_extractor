@@ -158,7 +158,7 @@ async function performExtractAndSave(url) {
 						text += div.textContent.replaceAll('\&', 'et').replaceAll(`<?xml:namespace prefix = o />`, '').trim();
 					});
 					const title = contentDoc.querySelector('h1').textContent.trim();
-					const author = authorElement.querySelector('a').textContent.replaceAll(/\s/g, '_');
+					const author = authorElement.querySelector('a').textContent;
 					const dateString = dateElement ? dateElement.textContent : 'Unknown Date';
 
 					const date = convertFrenchDateToISO(dateString);
@@ -169,7 +169,7 @@ async function performExtractAndSave(url) {
 
 					// Append a number to the file name to make it unique
 					while (addedFileNames.has(baseFileName)) {
-						baseFileName = `${date}_${author}_${index}.xml`;
+						baseFileName = `${date}_${author.replaceAll(/\s/g, '_')}_${index}.xml`;
 						index++;
 					}
 
