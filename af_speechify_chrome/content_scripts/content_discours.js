@@ -5,7 +5,9 @@ console.log('AF content script injected');
 const anchor = document.querySelector('h1');
 
 const fieldset = document.createElement('fieldset');
+fieldset.classList.add('af_speechify-fieldset');
 const legend = document.createElement('legend');
+legend.classList.add('af_speechify-legend');
 legend.textContent = 'Télécharger les documents';
 fieldset.appendChild(legend);
 anchor.appendChild(fieldset);
@@ -29,19 +31,17 @@ label.appendChild(document.createTextNode('Tout extraire'));
 checkboxDiv.appendChild(checkbox);
 checkboxDiv.appendChild(label);
 
+let extractAll = false;
+
 checkbox.addEventListener('change', function () {
 	if (checkbox.checked) {
 		console.log('Full extraction ahead');
 		extractButton.textContent = 'Tout extraire';
-		chrome.runtime.sendMessage({
-			action: 'extractAll'
-		})
+		extractAll = true;
 	} else {
 		console.log('Single page extraction');
 		extractButton.textContent = 'Extraire cette page';
-		chrome.runtime.sendMessage({
-			action: 'extractPage'
-		})
+		extractAll = false;
 	}
 });
 
@@ -59,7 +59,6 @@ extractionMessage.id = 'extractionMessage';
 extractionMessage.textContent = 'Extraction en cours…';
 extractionContainer.appendChild(extractionMessage);
 
-// const lastPageUrl = new URL(document.querySelector('.pager-last a').getAttribute('href'), 'https://www.academie-francaise.fr').href;
 const lastPageButton = document.querySelector('.pager-last a')
 if (lastPageButton) {
 	extractButton.before(checkboxDiv);
@@ -145,12 +144,14 @@ extractButton.addEventListener('click', () => {
 
 	chrome.runtime.sendMessage({
 		action: 'performExtraction',
-		url: window.location.href
+		url: window.location.href,
+		extractAll: extractAll
 	}, response => {
 		console.log('Response object:', response); // Log the entire response object
 
 		// Hide the extraction container
 		extractionContainer.style.display = 'none';
+		extractionMessage.textContent = 'Extraction en cours...';
 
 		//Reset abort button
 		abortButton.style.display = 'none';

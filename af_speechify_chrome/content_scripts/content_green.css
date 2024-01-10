@@ -21,7 +21,7 @@ button:hover {
 	font-size: small;
 }
 
-fieldset {
+fieldset.af_speechify-fieldset {
 	margin-top: 20px;
 	border: 1px solid #3D7328;
 	border-radius: 10px;
@@ -30,7 +30,7 @@ fieldset {
 	width: inherit;
 }
 
-legend {
+legend.af_speechify-legend {
 	background-color: white;
 	border: 1px solid #3D7328;
 	border-radius: 10px;
