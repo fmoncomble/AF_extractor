@@ -1,18 +1,17 @@
-![af-48](https://github.com/fmoncomble/af_speechify/assets/59739627/ee868342-8616-46e4-acbe-4527799772ce)
-# af_speechify
+# AF Extractor
 
 Une extension pour extraire les textes de l'Académie française sous forme de fichiers .xml prêts à importer dans [TXM](https://txm.gitpages.huma-num.fr/textometrie/).
 
 ### Citer ce programme
 Si vous utilisez cette extension pour vos travaux de recherche, merci de la référencer de la façon suivante :  
-Moncomble, F. (2024). *AF_speechify* (Version 0.7.4) [JavaScript]. Arras, France : Université d’Artois. https://github.com/fmoncomble/af_speechify
+Moncomble, F. (2024). *AF_extractor* (Version 0.7.4) [JavaScript]. Arras, France : Université d’Artois. https://github.com/fmoncomble/af_speechify
 
 ## Installation
 ### Firefox
-- [Installer l'extension](https://github.com/fmoncomble/af_speechify/releases/latest/download/af_speechify_ff.xpi) <- clic
+- [Installer l'extension](https://github.com/fmoncomble/AF_extractor/releases/latest/download/af_speechify_ff.xpi) <- clic
 
 ### Chrome/Edge
-- [Télécharger l'extension](https://github.com/fmoncomble/af_speechify/releases/latest/download/af_speechify_chrome.zip)
+- [Télécharger l'extension](https://github.com/fmoncomble/AF_extractor/releases/latest/download/af_speechify_chrome.zip)
 - Décompresser l'archive .zip
 - Dans le gestionnaire d'extensions (`chrome://extensions/` ou `edge://extensions/`),
   - activer le mode développeur
