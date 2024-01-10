@@ -164,7 +164,7 @@ async function performExtractAndSave(url) {
 					const date = convertFrenchDateToISO(dateString);
 					console.log('Speech date: ', date);
 
-					let baseFileName = `${date}_${author}.xml`;
+					let baseFileName = `${date}_${author.replaceAll(/\s/g, '_')}.xml`;
 					let index = 1;
 
 					// Append a number to the file name to make it unique
