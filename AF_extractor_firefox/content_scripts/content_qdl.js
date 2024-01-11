@@ -30,24 +30,29 @@ extractButton.addEventListener('click', () => {
   // Show the extraction container
   extractionContainer.style.display = 'block';
 
-  browser.runtime.sendMessage({
-    action: 'performExtraction',
-    url: window.location.href
-  }, response => {
-    console.log('Response object: ', response);
+  browser.runtime.sendMessage(
+    {
+      action: 'performExtraction',
+      url: window.location.href,
+    },
+    (response) => {
+      console.log('Response object: ', response);
 
-    // Hide the extraction container
-    extractionContainer.style.display = 'none';
+      // Hide the extraction container
+      extractionContainer.style.display = 'none';
 
-    if (response.success) {
-      // Display the downloaded files
-      const downloadedFilesContainer = document.createElement('div');
-      downloadedFilesContainer.classList.add('fileList');
-      downloadedFilesContainer.textContent = `Fini !\n${response.fetchedQuestions.length} fichiers téléchargés:\n${response.fetchedQuestions.join(', ')}.`;
-      anchor.appendChild(downloadedFilesContainer);
-    } else {
-      console.error('Error:', response.error);
-      // Handle error
+      if (response.success) {
+        // Display the downloaded files
+        const downloadedFilesContainer = document.createElement('div');
+        downloadedFilesContainer.classList.add('fileList');
+        downloadedFilesContainer.textContent = `Fini !\n${
+          response.fetchedQuestions.length
+        } fichiers téléchargés:\n${response.fetchedQuestions.join(', ')}.`;
+        anchor.appendChild(downloadedFilesContainer);
+      } else {
+        console.error('Error:', response.error);
+        // Handle error
+      }
     }
-  });
+  );
 });
