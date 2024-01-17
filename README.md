@@ -9,10 +9,10 @@ Moncomble, F. (2024). *AF_extractor* (Version 1.0) [JavaScript]. Arras, France :
 
 ## Installation
 ### Firefox
-- [Installer l'extension](https://github.com/fmoncomble/AF_extractor/releases/latest/download/af_speechify_ff.xpi) <- clic
+[![Firefox add-on](https://github.com/fmoncomble/AF_extractor/assets/59739627/85190a99-30d6-4ecb-a0ac-92e1ef7a3b48)](https://github.com/fmoncomble/AF_extractor/releases/latest/download/af_extractor_ff.xpi)
 
 ### Chrome/Edge
-- [Télécharger l'extension](https://github.com/fmoncomble/AF_extractor/releases/latest/download/af_speechify_chrome.zip)
+- [Télécharger l'extension](https://github.com/fmoncomble/AF_extractor/releases/latest/download/af_extractor_chrome.zip)
 - Décompresser l'archive .zip
 - Dans le gestionnaire d'extensions (`chrome://extensions/` ou `edge://extensions/`),
   - activer le mode développeur
