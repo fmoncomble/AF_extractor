@@ -14,16 +14,16 @@ extractionContainer.id = "extractionContainer";
 extractionContainer.style.display = "none"; // Hide initially
 anchor.appendChild(extractionContainer);
 
+// Create the loading spinner element
+const spinner = document.createElement("div");
+spinner.classList.add("spinner"); // Add a class for styling
+extractionContainer.appendChild(spinner);
+
 // Create the extraction message element
 const extractionMessage = document.createElement("div");
 extractionMessage.id = "extractionMessage";
 extractionMessage.textContent = "Extraction en cours…";
 extractionContainer.appendChild(extractionMessage);
-
-// Create the loading spinner element
-const spinner = document.createElement("div");
-spinner.classList.add("spinner"); // Add a class for styling
-extractionContainer.appendChild(spinner);
 
 // Message passing to notify the background script when the button is clicked
 extractButton.addEventListener("click", () => {

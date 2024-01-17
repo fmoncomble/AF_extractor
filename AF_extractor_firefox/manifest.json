@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "AF Extractor",
 
-  "version": "0.7.5",
+  "version": "1.0",
 
   "description": "Extrait les textes de l'Académie française et les enregistre au format XML pour import dans TXM",
   "homepage_url": "https://github.com/fmoncomble/AF_extractor",

@@ -1,6 +1,7 @@
 // contentScript.js
 console.log("AF content script injected");
 
+// Create field for extraction GUI
 const fieldset = document.createElement("fieldset");
 fieldset.classList.add("af_speechify-fieldset");
 const legend = document.createElement("legend");
@@ -8,7 +9,7 @@ legend.classList.add("af_speechify-legend");
 legend.textContent = "Télécharger les documents";
 fieldset.appendChild(legend);
 
-// Inject the button into the page
+// Locate injection site
 let anchor;
 let test = document.querySelector(".node");
 if (test) {
@@ -19,6 +20,7 @@ if (test) {
   anchor.appendChild(fieldset);
 }
 
+// Create extraction button and container
 const extractButtonContainer = document.createElement("div");
 extractButtonContainer.classList.add("extract-button-container");
 fieldset.appendChild(extractButtonContainer);
@@ -27,12 +29,17 @@ const extractButton = document.createElement("button");
 extractButton.id = "extractButton";
 extractButton.textContent = "Extraire cette page";
 
+extractButtonContainer.appendChild(extractButton);
+
+// Create extraction option checkbox
 const checkboxDiv = document.createElement("div");
+checkboxDiv.classList.add('checkbox');
 const checkbox = document.createElement("input");
 checkbox.type = "checkbox";
 checkbox.name = "extractOption";
 checkbox.id = "extractOption";
 const label = document.createElement("span");
+label.id = "extractOption";
 label.htmlFor = "extractOption";
 label.appendChild(document.createTextNode("Tout extraire"));
 checkboxDiv.appendChild(checkbox);
@@ -52,13 +59,16 @@ checkbox.addEventListener("change", function () {
   }
 });
 
-extractButtonContainer.appendChild(extractButton);
-
 // Create a container for the extraction message and spinner
 const extractionContainer = document.createElement("div");
 extractionContainer.id = "extractionContainer";
 extractionContainer.style.display = "none"; // Hide initially
 fieldset.appendChild(extractionContainer);
+
+// Create the loading spinner element
+const spinner = document.createElement("div");
+spinner.classList.add("spinner"); // Add a class for styling
+extractionContainer.appendChild(spinner);
 
 // Create the extraction message element
 const extractionMessage = document.createElement("div");
@@ -66,6 +76,7 @@ extractionMessage.id = "extractionMessage";
 extractionMessage.textContent = "Extraction en cours…";
 extractionContainer.appendChild(extractionMessage);
 
+// Retrieve range info
 let lastPageButton = document.querySelector(".pager-last a");
 if (lastPageButton) {
   extractButton.before(checkboxDiv);
@@ -87,7 +98,7 @@ if (lastPageButton) {
   }
   const totalPageNo = ++lastPageNo;
   console.log("Total number of pages = ", totalPageNo);
-  label.textContent = `Tout extraire (${totalPageNo} pages)`;
+  label.textContent = `Extraire les ${totalPageNo} pages de résultats`;
 
   updateRange();
 
@@ -115,11 +126,6 @@ if (lastPageButton) {
 } else {
   console.log("Only one page to extract");
 }
-
-// Create the loading spinner element
-const spinner = document.createElement("div");
-spinner.classList.add("spinner"); // Add a class for styling
-extractionContainer.appendChild(spinner);
 
 // Create the abort button
 const abortButton = document.createElement("button");
@@ -153,6 +159,7 @@ extractButton.addEventListener("click", () => {
 
   // Show the extraction container
   extractionContainer.style.display = "block";
+  fieldset.style.cursor = 'wait';
   downloadedFilesContainer.textContent = "";
   downloadedFilesContainer.style.display = "none";
 
@@ -167,6 +174,7 @@ extractButton.addEventListener("click", () => {
 
       // Hide the extraction container
       extractionContainer.style.display = "none";
+      fieldset.style.cursor = '';
       extractionMessage.textContent = "Extraction en cours...";
 
       //Reset abort button

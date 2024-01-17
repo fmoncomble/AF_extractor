@@ -157,15 +157,14 @@ async function extractDiscours(url) {
             const date = convertFrenchDateToISO(dateString);
             console.log('Speech date: ', date);
 
-            let baseFileName = `${date}_${author.replaceAll(/\s/g, '_')}.xml`;
+            const authorForFileName = author.replaceAll(/\s/g, '_').replaceAll(',', '');
+
+            let baseFileName = `${date}_${authorForFileName}.xml`;
             let index = 1;
 
             // Append a number to the file name to make it unique
             while (addedFileNames.has(baseFileName)) {
-              baseFileName = `${date}_${author.replaceAll(
-                /\s/g,
-                '_'
-              )}_${index}.xml`;
+              baseFileName = `${date}_${authorForFileName}_${index}.xml`;
               index++;
             }
 
