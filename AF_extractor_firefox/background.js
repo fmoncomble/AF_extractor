@@ -142,8 +142,10 @@ async function extractDiscours(url) {
             let text = '';
             bodyDivs.forEach((div) => {
               text += div.textContent
-                .replaceAll('&', 'et')
+                .replaceAll('&', '&amp;')
+                .replaceAll('ſ', 's')
                 .replaceAll(`<?xml:namespace prefix = o />`, '')
+                .replaceAll('\n', '<lb></lb>')
                 .trim();
             });
             const title = contentDoc.querySelector('h1').textContent.trim();
@@ -171,9 +173,9 @@ async function extractDiscours(url) {
 
             const h1Element = doc.querySelector('h1');
             const pageTitle = h1Element.textContent.trim();
-            cleanPageTitle = pageTitle.replace(/.+ : /, '');
+            cleanPageTitle = pageTitle.replaceAll(/.+ : /g, '').replaceAll('&', '&amp;');
 
-            const xmlContent = `<text author="${author}" title="${title}" date="${date}" cat="discours" sscat="${cleanPageTitle}">\n<ref target="${url}">Lien vers l'original</ref><lb></lb><lb></lb>\n${text}\n</text>`;
+            const xmlContent = `<text author="${author}" title="${title.replaceAll('&', '&amp;').replaceAll('"', '&quot;')}" date="${date}" cat="discours" sscat="${cleanPageTitle}">\n<ref target="${url}">Lien vers l'original</ref><lb></lb><lb></lb>\n${text}\n</text>`;
 
             // Add the XML content to the zip archive
             zip.file(baseFileName, xmlContent);
@@ -262,15 +264,17 @@ async function extractDnpd(url) {
             );
             const text = textDiv
               ? textDiv.textContent
-                  .replaceAll('&', 'et')
+                  .replaceAll('&', '&amp;')
+                  .replaceAll('ſ', 's')
                   .replaceAll(`<?xml:namespace prefix = o />`, '')
+                  .replaceAll('\n', '<lb></lb>')
                   .trim()
               : '';
 
             const category = div.querySelector('.category.color');
-            fileCategory = category.textContent.replace('&', 'et').trim();
+            fileCategory = category.textContent.replace('&', '&amp;').trim();
 
-            const xmlContent = `<text title="${title}" date="${date}" cat="dnpd" sscat="${fileCategory}">\n<ref target="${itemUrl}">Lien vers l'original</ref><lb></lb><lb></lb>\n${text}\n</text>`;
+            const xmlContent = `<text title="${title.replaceAll('&', '&amp;').replaceAll('"', '&quot;')}" date="${date}" cat="dnpd" sscat="${fileCategory}">\n<ref target="${itemUrl}">Lien vers l'original</ref><lb></lb><lb></lb>\n${text}\n</text>`;
 
             const fileName = `${date}_${title
               .replaceAll(/\p{P}/gu, '')
@@ -341,12 +345,14 @@ async function extractQdl(url) {
           .map((paragraph) =>
             paragraph.textContent
               .trim()
-              .replaceAll('&', 'et')
+              .replaceAll('&', '&amp;')
+              .replaceAll('ſ', 's')
               .replaceAll(`<?xml:namespace prefix = o />`, '')
+              .replaceAll('\n', '<lb></lb>')
           )
-          .join('\n'); // Combine text content of all paragraphs
+          .join('<lb></lb>'); // Combine text content of all paragraphs
 
-        const xmlContent = `<text title="${cleanTitle}" cat="qdl">\n<ref target="https://www.academie-francaise.fr/questions-de-langue">Lien vers l'original</ref><lb></lb><lb></lb>\n${text}\n</text>`;
+        const xmlContent = `<text title="${title.replaceAll('&', '&amp;').replaceAll('"', '&quot;')}" cat="qdl">\n<ref target="https://www.academie-francaise.fr/questions-de-langue">Lien vers l'original</ref><lb></lb><lb></lb>\n${text}\n</text>`;
 
         const fileName = `${cleanTitle}.xml`;
 
