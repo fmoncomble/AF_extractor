@@ -1,11 +1,11 @@
 # AF Extractor
 
-Une extension pour extraire les textes de l'Académie française sous forme de fichiers .xml prêts à importer dans [TXM](https://txm.gitpages.huma-num.fr/textometrie/).
+Une extension pour extraire et télécharger les textes de l'Académie française.
 
 ### Citer ce programme
 Si vous utilisez cette extension pour vos travaux de recherche, merci de la référencer de la façon suivante :  
   
-Moncomble, F. (2024). *AF_extractor* (Version 1.0) [JavaScript]. Arras, France : Université d’Artois. Disponible à l'adresse : https://github.com/fmoncomble/AF_extractor
+Moncomble, F. (2024). *AF_extractor* (Version 1.1) [JavaScript]. Arras, France : Université d’Artois. Disponible à l'adresse : https://github.com/fmoncomble/AF_extractor
 
 ## Installation
 ### Firefox
@@ -25,6 +25,7 @@ Moncomble, F. (2024). *AF_extractor* (Version 1.0) [JavaScript]. Arras, France :
 	- ou une page de recherche dans la rubrique "Dire, ne pas dire" ([exemple](https://www.academie-francaise.fr/dire-ne-pas-dire/recherche?titre=&rubrique=364&date=&form_build_id=form-XiN72sBPvnkA-n23XgPVZ_joYjulLrBILhIIyR2euaM&form_id=academie_blog_search_form&op=Rechercher))
 	- ou la page [Questions de langue](https://www.academie-francaise.fr/questions-de-langue)
 - Le cas échéant, cocher la case « Tout extraire » pour récupérer les documents de toutes les pages de résultats en une seule opération, ou la laisser décochée pour ne récupérer que la page courante
+- Choisir le format souhaité dans le menu déroulant (TXT ou XML/XTZ pour importation dans [TXM](https://txm.gitpages.huma-num.fr/textometrie/))
 - Cliquer sur « Extraire cette page » / « Tout extraire »
 - Firefox : l'archive .zip contenant les fichiers .xml est téléchargée dans le dossier par défaut
 - Chrome/Edge : Choisir le dossier de destination pour l'archive .zip contenant les fichiers .xml
