@@ -1,3 +1,4 @@
+
 # AF Extractor
 
 Une extension pour extraire et télécharger les textes de l'Académie française.
@@ -21,11 +22,12 @@ Moncomble, F. (2024). *AF_extractor* (Version 1.1) [JavaScript]. Arras, France :
 
 ## Utilisation
 - Ouvrir :
-	- une page listant des discours de l'AF ([exemple](https://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques))
-	- ou une page de recherche dans la rubrique "Dire, ne pas dire" ([exemple](https://www.academie-francaise.fr/dire-ne-pas-dire/recherche?titre=&rubrique=364&date=&form_build_id=form-XiN72sBPvnkA-n23XgPVZ_joYjulLrBILhIIyR2euaM&form_id=academie_blog_search_form&op=Rechercher))
+	- une page thématique de discours de l'AF ([exemple](https://www.academie-francaise.fr/les-immortels/discours-et-travaux-academiques?titre=&auteur=&annee=&siecle=&theme=40&trier_par=annee_desc&form_build_id=form-ObEDRM1QIa4nZobp9beKPicEWvSzO-U5eHKtEoBk1n4&form_id=academie_immortals_speeches_search_form&op=Rechercher))
+	- ou une page de billets dans la rubrique "Dire, ne pas dire" ([exemple](https://www.academie-francaise.fr/dire-ne-pas-dire/recherche?titre=&rubrique=364&date=&form_build_id=form-XiN72sBPvnkA-n23XgPVZ_joYjulLrBILhIIyR2euaM&form_id=academie_blog_search_form&op=Rechercher))
 	- ou la page [Questions de langue](https://www.academie-francaise.fr/questions-de-langue)
-- Le cas échéant, cocher la case « Tout extraire » pour récupérer les documents de toutes les pages de résultats en une seule opération, ou la laisser décochée pour ne récupérer que la page courante
+- Choisir entre extraire toutes les pages de résultats ou seulement la page courante
 - Choisir le format souhaité dans le menu déroulant (TXT ou XML/XTZ pour importation dans [TXM](https://txm.gitpages.huma-num.fr/textometrie/))
+  - L'importation des fichiers XML dans TXM doit se faire à l'aide du module `XML/TEI Zero` en indiquant `ref` dans la rubrique `Plans textuels` > `Hors texte à éditer`
 - Cliquer sur « Extraire cette page » / « Tout extraire »
 - Firefox : l'archive .zip contenant les fichiers .xml est téléchargée dans le dossier par défaut
 - Chrome/Edge : Choisir le dossier de destination pour l'archive .zip contenant les fichiers .xml
